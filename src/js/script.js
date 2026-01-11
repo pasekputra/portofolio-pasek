@@ -110,3 +110,49 @@ if (
 
 
 }
+
+
+// // EmailJS
+// EmailJS
+const btn = document.getElementById('submit');
+
+document.getElementById('form').addEventListener('submit', function (event) {
+    event.preventDefault(); // Mencegah pengiriman form secara default
+    btn.value = 'Sending...'; // Mengubah teks tombol menjadi "Sending..."
+
+    // Inisialisasi EmailJS
+    const serviceID = 'service_rteeqn4';
+    const templateID = 'template_ujps10q';
+
+    emailjs.sendForm(serviceID, templateID, this)
+        .then(() => {
+            btn.value = 'Send Email'; // Kembalikan teks tombol
+
+            // Tampilkan popup sukses
+            Swal.fire({
+                title: 'Berhasil!',
+                text: 'Email berhasil dikirim!',
+                icon: 'success',
+                timer: 3000,
+                confirmButtonText: 'Oke',
+                timerProgressBar: true
+            });
+
+            // Refresh halaman setelah 500ms
+            setTimeout(() => {
+                location.reload();
+            }, 3500);
+        }, (err) => {
+            btn.value = 'Send Email'; // Kembalikan teks tombol
+
+            // Tampilkan error
+            Swal.fire({
+                title: 'Gagal!',
+                text: 'Terjadi kesalahan saat mengirim email.',
+                icon: 'error',
+                confirmButtonText: 'Coba Lagi'
+            });
+
+            console.error('EmailJS Error:', err);
+        });
+});
